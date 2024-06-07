@@ -1,19 +1,20 @@
-"use state"
-import { ethers } from "ethers"
-import { inStock } from "./main"
+"use state";
+import { ethers } from "ethers";
+import { inStock } from "./main";
 import { IoIosStar } from "react-icons/io";
 
 export default function ToysCard({
-    id,
-    name,
-    category,
-    image,
-    cost,
-    rating,
-    stock,
-  }: inStock) {
-    return (
-        <div className="flex flex-col gap-y-2 mx-auto ">
+  id,
+  name,
+  category,
+  image,
+  cost,
+  rating,
+  stock,
+  toggleModal,
+}: inStock) {
+  return (
+    <div onClick={toggleModal} className="flex flex-col cursor-pointer gap-y-2 mx-auto ">
       <img src={image} alt="next" className="border w-[80%] md:w-full  " />
       <div className="">
         <h3 className="font-semibold text-xl">{name}</h3>
@@ -28,5 +29,5 @@ export default function ToysCard({
         <h3>{ethers.utils.formatUnits(cost.toString(), "ether")} ETH</h3>
       </div>
     </div>
-    )
+  );
 }
