@@ -13,7 +13,7 @@ const ClothingCard = ({
   stock,
   toggleModal,
   chooseItem
-}: inStock) => {
+}: inStock ) => {
   return (
     <div id={id.toString()} onClick={(event) => {
         toggleModal!()

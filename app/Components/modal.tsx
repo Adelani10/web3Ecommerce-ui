@@ -1,10 +1,12 @@
 import { MdClose } from "react-icons/md";
+import { inStock } from "./main";
 
 interface toggle {
   toggleModal: () => void;
+  presentItem: inStock
 }
 
-export default function Modal({ toggleModal}: toggle) {
+export default function Modal({ toggleModal, presentItem }: toggle) {
   return (
     <>
       <div className="bg-black opacity-90 absolute top-0 left-0 w-full h-full" />

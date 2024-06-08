@@ -33,8 +33,8 @@ export interface inStock {
   chooseItem?: (event: any) => void;
 }
 
-// export interface clothingProp {
-//   clothingAttributes: clothingItem[];
+// export interface present {
+//   presentItem: inStock;
 // }
 
 const Main: NextPage = () => {
@@ -81,18 +81,13 @@ const Main: NextPage = () => {
     }
   }, [isWeb3Enabled]);
 
-  const chooseItem = (event: any) => {
-    const clickedObj: any = itemsFromCall?.map((obj: any) => {
-      if (event.target.id === obj.id) {
-        return obj;
-      } else {
-        console.log(event.target.id, obj.id);
+  const chooseItem = (event: React.MouseEvent<HTMLDivElement>) => {
+    itemsFromCall?.map((obj: any) => {
+      if (event.currentTarget.id == obj.id.toString()) {
+        setPresentItem(obj);
       }
     });
-    setPresentItem(clickedObj);
   };
-
-  console.log(presentItem);
 
   const toggleModal = () => {
     setShowModal(!showModal);
@@ -100,7 +95,9 @@ const Main: NextPage = () => {
 
   return (
     <div className="text-black flex gap-y-4 flex-col container mx-auto">
-      {showModal && <Modal toggleModal={toggleModal} />}
+      {showModal && (
+        <Modal toggleModal={toggleModal} presentItem={presentItem!} />
+      )}
       <h2 className="text-3xl font-semibold pt-4">U-Bay Best Sellers</h2>
       <div className="">
         <h2 className="capitalize font-semibold text-2xl w-full border-b-2 pb-1 border-black">
@@ -143,6 +140,7 @@ const Main: NextPage = () => {
                 rating={item.rating}
                 stock={item.stock}
                 toggleModal={toggleModal}
+                chooseItem={chooseItem}
               />
             );
           })}
@@ -166,6 +164,7 @@ const Main: NextPage = () => {
                 rating={item.rating}
                 stock={item.stock}
                 toggleModal={toggleModal}
+                chooseItem={chooseItem}
               />
             );
           })}
