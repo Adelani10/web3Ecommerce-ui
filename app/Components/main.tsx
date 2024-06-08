@@ -60,7 +60,7 @@ const Main: NextPage = () => {
     const web3Ecommerce = new ethers.Contract(address!, abi, provider);
     setMainContract(web3Ecommerce);
 
-    for (let i = 0; i < 9; i++) {
+    for (let i = 0; i <= 9; i++) {
       const response = await mainContract?.items(i);
       arr.push(response);
     }
@@ -80,6 +80,7 @@ const Main: NextPage = () => {
       getContract();
     }
   }, [isWeb3Enabled]);
+  console.log(isWeb3Enabled);
 
   const chooseItem = (event: React.MouseEvent<HTMLDivElement>) => {
     itemsFromCall?.map((obj: any) => {
@@ -94,83 +95,99 @@ const Main: NextPage = () => {
   };
 
   return (
-    <div className="text-black flex gap-y-4 flex-col container mx-auto">
-      {showModal && (
-        <Modal toggleModal={toggleModal} presentItem={presentItem!} />
+    <>
+      {itemsFromCall ? (
+        <div className="text-black flex gap-y-4 flex-col container mx-auto">
+          {showModal && (
+            <Modal toggleModal={toggleModal} presentItem={presentItem!} />
+          )}
+          <h2 className="text-3xl font-semibold pt-4">U-Bay Best Sellers</h2>
+          <div className="">
+            <h2 className="capitalize font-semibold text-2xl w-full border-b-2 pb-1 border-black">
+              clothing & jewelry
+            </h2>
+            <div className="md:grid grid-cols-3 flex flex-col gap-y-8 md:gap-y-0 md:gap-x-3 p-3">
+              {clothing?.map((item, index) => {
+                return (
+                  <ClothingCard
+                    key={index}
+                    id={item.id}
+                    name={item.name}
+                    category={item.category}
+                    image={item.image}
+                    cost={item.cost}
+                    rating={item.rating}
+                    stock={item.stock}
+                    toggleModal={toggleModal}
+                    chooseItem={chooseItem}
+                  />
+                );
+              })}
+            </div>
+          </div>
+
+          <div className="">
+            <h2 className="capitalize font-semibold text-2xl w-full border-b-2 pb-1 border-black">
+              electronics and gadgets
+            </h2>
+            <div className="md:grid grid-cols-3 flex flex-col gap-y-8 md:gap-y-0 md:gap-x-3 p-3">
+              {electronics?.map((item, index) => {
+                return (
+                  <ElectronicsCard
+                    key={index}
+                    id={item.id}
+                    name={item.name}
+                    category={item.category}
+                    image={item.image}
+                    cost={item.cost}
+                    rating={item.rating}
+                    stock={item.stock}
+                    toggleModal={toggleModal}
+                    chooseItem={chooseItem}
+                  />
+                );
+              })}
+            </div>
+          </div>
+
+          <div className="">
+            <h2 className="capitalize font-semibold text-2xl w-full border-b-2 pb-1 border-black">
+              toys and gaming
+            </h2>
+            <div className="md:grid grid-cols-3 flex flex-col gap-y-8 md:gap-y-0 md:gap-x-3 p-3">
+              {toys?.map((item, index) => {
+                return (
+                  <ToysCard
+                    key={index}
+                    id={item.id}
+                    name={item.name}
+                    category={item.category}
+                    image={item.image}
+                    cost={item.cost}
+                    rating={item.rating}
+                    stock={item.stock}
+                    toggleModal={toggleModal}
+                    chooseItem={chooseItem}
+                  />
+                );
+              })}
+            </div>
+          </div>
+        </div>
+      ) : (
+        // <div className=" justify-center flex items-center animate-spin border-b-4 rounded-xl border-sky-700 w-5 h-5 "/>
+
+        <div className="flex text-sky-700 justify-center items-center h-screen">
+          <svg
+            className="animate-spin h-5 w-5 mr-3 border-sky-400 border-b rounded-full ..."
+            viewBox="0 0 24 24"
+          >
+            ...
+          </svg>
+          Connect Wallet...
+        </div>
       )}
-      <h2 className="text-3xl font-semibold pt-4">U-Bay Best Sellers</h2>
-      <div className="">
-        <h2 className="capitalize font-semibold text-2xl w-full border-b-2 pb-1 border-black">
-          clothing & jewelry
-        </h2>
-        <div className="md:grid grid-cols-3 flex flex-col gap-y-8 md:gap-y-0 md:gap-x-3 p-3">
-          {clothing?.map((item, index) => {
-            return (
-              <ClothingCard
-                key={index}
-                id={item.id}
-                name={item.name}
-                category={item.category}
-                image={item.image}
-                cost={item.cost}
-                rating={item.rating}
-                stock={item.stock}
-                toggleModal={toggleModal}
-                chooseItem={chooseItem}
-              />
-            );
-          })}
-        </div>
-      </div>
-
-      <div className="">
-        <h2 className="capitalize font-semibold text-2xl w-full border-b-2 pb-1 border-black">
-          electronics and gadgets
-        </h2>
-        <div className="md:grid grid-cols-3 flex flex-col gap-y-8 md:gap-y-0 md:gap-x-3 p-3">
-          {electronics?.map((item, index) => {
-            return (
-              <ElectronicsCard
-                key={index}
-                id={item.id}
-                name={item.name}
-                category={item.category}
-                image={item.image}
-                cost={item.cost}
-                rating={item.rating}
-                stock={item.stock}
-                toggleModal={toggleModal}
-                chooseItem={chooseItem}
-              />
-            );
-          })}
-        </div>
-      </div>
-
-      <div className="">
-        <h2 className="capitalize font-semibold text-2xl w-full border-b-2 pb-1 border-black">
-          toys and gaming
-        </h2>
-        <div className="md:grid grid-cols-3 flex flex-col gap-y-8 md:gap-y-0 md:gap-x-3 p-3">
-          {toys?.map((item, index) => {
-            return (
-              <ToysCard
-                key={index}
-                id={item.id}
-                name={item.name}
-                category={item.category}
-                image={item.image}
-                cost={item.cost}
-                rating={item.rating}
-                stock={item.stock}
-                toggleModal={toggleModal}
-                chooseItem={chooseItem}
-              />
-            );
-          })}
-        </div>
-      </div>
-    </div>
+    </>
   );
 };
 
