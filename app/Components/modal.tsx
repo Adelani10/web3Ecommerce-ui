@@ -8,7 +8,6 @@ interface toggle {
 }
 
 export default function Modal({ toggleModal, presentItem }: toggle) {
-
   return (
     <>
       <div className="bg-black opacity-90 absolute top-0 left-0 w-full h-full" />
@@ -35,7 +34,7 @@ export default function Modal({ toggleModal, presentItem }: toggle) {
               <span>{presentItem.rating.toString()} Star</span>
             </h3>
             <h3 className="font-semibold text-xl border-b-2 border-black">
-              {ethers.utils.formatUnits(presentItem.cost.toString(), "ether")}
+              {ethers.utils.formatUnits(presentItem.cost.toString(), "ether")}{" "}
               ETH
             </h3>
 
@@ -53,17 +52,22 @@ export default function Modal({ toggleModal, presentItem }: toggle) {
           <div className="border-2 h-full md:w-1/3 space-y-3">
             <div>
               <h3 className="font-bold text-xl">
-                {ethers.utils.formatUnits(
-                  presentItem.cost.toString(),
-                  "ether"
-                )}
+                {ethers.utils.formatUnits(presentItem.cost.toString(), "ether")}{" "}
                 ETH
               </h3>
               <h3>
-                Free delivery <span>{}</span>
+                Free delivery{" "}
+                <strong>
+                  {new Date(Date.now() + 518400000).toLocaleDateString(undefined, {
+                    weekday: "short",
+                    month: "long",
+                    day: "numeric",
+                    year: "numeric"
+                  })}
+                </strong>
               </h3>
 
-              <h3>{presentItem.stock > 0 ? "In Stock" : "Out of Stock"}</h3>
+              <h3 className="font-semibold">{presentItem.stock > 0 ? "In Stock" : "Out of Stock"}</h3>
             </div>
 
             <button className="bg-yellow-500 rounded-full px-6 font-semibold py-2">
