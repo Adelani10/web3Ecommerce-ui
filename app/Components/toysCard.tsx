@@ -12,9 +12,17 @@ export default function ToysCard({
   rating,
   stock,
   toggleModal,
+  chooseItem,
 }: inStock) {
   return (
-    <div onClick={toggleModal} className="flex flex-col cursor-pointer gap-y-2 mx-auto ">
+    <div
+      id={id.toString()}
+      onClick={(event) => {
+        toggleModal!();
+        chooseItem!(event);
+      }}
+      className="flex flex-col cursor-pointer gap-y-2 mx-auto "
+    >
       <img src={image} alt="next" className="border w-[80%] md:w-full  " />
       <div className="">
         <h3 className="font-semibold text-xl">{name}</h3>

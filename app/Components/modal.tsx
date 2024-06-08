@@ -1,12 +1,14 @@
 import { MdClose } from "react-icons/md";
 import { inStock } from "./main";
+import { ethers } from "ethers";
 
 interface toggle {
   toggleModal: () => void;
-  presentItem: inStock
+  presentItem: inStock;
 }
 
 export default function Modal({ toggleModal, presentItem }: toggle) {
+
   return (
     <>
       <div className="bg-black opacity-90 absolute top-0 left-0 w-full h-full" />
@@ -20,15 +22,21 @@ export default function Modal({ toggleModal, presentItem }: toggle) {
 
         <section className="flex md:gap-x-4 md:flex-row flex-col">
           <div className="md:w-1/3">
-            <img src="/next.svg" alt="item-image" className="md:w-full" />
+            <img
+              src={presentItem.image}
+              alt="item-image"
+              className="md:w-full"
+            />
           </div>
 
           <div className="md:w-1/3 space-y-2">
             <h3 className="border-b-2 border-black text-xl font-bold">
-              Name <br></br> <span>5 Star</span>
+              {presentItem.name} <br></br>
+              <span>{presentItem.rating.toString()} Star</span>
             </h3>
             <h3 className="font-semibold text-xl border-b-2 border-black">
-              2.5 ETH
+              {ethers.utils.formatUnits(presentItem.cost.toString(), "ether")}
+              ETH
             </h3>
 
             <article className="space-y-1">
@@ -44,12 +52,18 @@ export default function Modal({ toggleModal, presentItem }: toggle) {
 
           <div className="border-2 h-full md:w-1/3 space-y-3">
             <div>
-              <h3 className="font-bold text-xl">2.5 ETH</h3>
+              <h3 className="font-bold text-xl">
+                {ethers.utils.formatUnits(
+                  presentItem.cost.toString(),
+                  "ether"
+                )}
+                ETH
+              </h3>
               <h3>
                 Free delivery <span>{}</span>
               </h3>
 
-              <h3>In stock</h3>
+              <h3>{presentItem.stock > 0 ? "In Stock" : "Out of Stock"}</h3>
             </div>
 
             <button className="bg-yellow-500 rounded-full px-6 font-semibold py-2">
