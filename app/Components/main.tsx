@@ -46,6 +46,7 @@ const Main: NextPage = () => {
   const [toys, setToys] = useState<inStock[] | null>(null);
   const [showModal, setShowModal] = useState<boolean>(false);
   const [presentItem, setPresentItem] = useState<inStock>();
+  const [signer, setSigner] = useState<any>(null);
 
   const addy: contractAddressesInterface = ca;
 
@@ -57,6 +58,7 @@ const Main: NextPage = () => {
     const arr: any[] = [];
     const provider = new ethers.providers.Web3Provider(window.ethereum);
 
+    setSigner(provider.getSigner());
     const web3Ecommerce = new ethers.Contract(address!, abi, provider);
     setMainContract(web3Ecommerce);
 
@@ -80,7 +82,6 @@ const Main: NextPage = () => {
       getContract();
     }
   }, [isWeb3Enabled]);
-  console.log(isWeb3Enabled);
 
   const chooseItem = (event: React.MouseEvent<HTMLDivElement>) => {
     itemsFromCall?.map((obj: any) => {
@@ -99,7 +100,12 @@ const Main: NextPage = () => {
       {itemsFromCall ? (
         <div className="text-black flex gap-y-4 flex-col container mx-auto">
           {showModal && (
-            <Modal toggleModal={toggleModal} presentItem={presentItem!} />
+            <Modal
+              toggleModal={toggleModal}
+              presentItem={presentItem!}
+              account={account!}
+              address={address}
+            />
           )}
           <h2 className="text-3xl font-semibold pt-4">U-Bay Best Sellers</h2>
           <div className="">

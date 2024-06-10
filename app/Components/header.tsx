@@ -1,10 +1,13 @@
 "use client";
 import { ConnectButton } from "web3uikit";
 import Link from "next/link";
+import { useMoralis } from "react-moralis";
 
 const arr = ["clothing & jewelry", "electronics & gadgets", "toys & gaming"];
 
 export default function Header() {
+
+  const {isWeb3Enabled} = useMoralis()
   return (
     <nav className="flex flex-col pt-2 bg-black">
       <div className="flex justify-between items-center container mx-auto">
@@ -17,7 +20,7 @@ export default function Header() {
         </div>
       </div>
 
-      <div className="mx-auto bg-sky-800 w-full">
+      {isWeb3Enabled && <div className="mx-auto bg-sky-800 w-full">
         <div className="flex justify-center gap-x-4 md:gap-x-12 container mx-auto">
           {arr.map((item, index) => (
             <button key={index} className="capitalize">
@@ -25,7 +28,7 @@ export default function Header() {
             </button>
           ))}
         </div>
-      </div>
+      </div>}
     </nav>
   );
 }
