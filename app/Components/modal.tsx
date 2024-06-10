@@ -21,7 +21,7 @@ export default function Modal({
 }: toggle) {
   const dispatch = useNotification();
   const deployer = "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266";
-  const [orderCountNow, setOrderCountNow] = useState<any>(null);
+//   const [orderCountNow, setOrderCountNow] = useState<any>(null);
   const [ordersNow, setOrdersNow] = useState<any>(null);
   const [itemBought, setItemBought] = useState<boolean>(false);
   const { isWeb3Enabled } = useMoralis();
@@ -36,30 +36,30 @@ export default function Modal({
     msgValue: presentItem.cost,
   });
 
-  const { runContractFunction: orderCount } = useWeb3Contract({
+//   const { runContractFunction: getOrderCount } = useWeb3Contract({
+//     abi: abi,
+//     contractAddress: address,
+//     functionName: "getOrderCount",
+//     params: {
+//       buyer: account,
+//     },
+//   });
+
+  const { runContractFunction: getOrders } = useWeb3Contract({
     abi: abi,
     contractAddress: address,
-    functionName: "orderCount",
+    functionName: "getOrders",
     params: {
-      "": account,
+      buyer: account,
+      count: presentItem.id,
     },
   });
 
-  const { runContractFunction: orders } = useWeb3Contract({
-    abi: abi,
-    contractAddress: address,
-    functionName: "orders",
-    params: {
-      0: account,
-      1: orderCountNow,
-    },
-  });
+  const responseFromOrderCall = async () => {
+    // const fromCall = await getOrderCount();
+    // setOrderCountNow(fromCall);
 
-  const getOrderCount = async () => {
-    const fromCall = await orderCount();
-    setOrderCountNow(fromCall);
-
-    const response = await orders();
+    const response = await getOrders();
     setOrdersNow(response);
   };
 
@@ -75,7 +75,7 @@ export default function Modal({
 
   useEffect(() => {
     if (itemBought) {
-      getOrderCount();
+      responseFromOrderCall();
     }
   }, [account, isWeb3Enabled, itemBought]);
 
@@ -88,9 +88,7 @@ export default function Modal({
     });
   };
 
-  console.log(orderCountNow);
-  console.log(ordersNow);
-  console.log(itemBought)
+  console.log(ordersNow?.time);
   return (
     <>
       <div className="bg-black opacity-90 absolute top-0 left-0 w-full h-full" />

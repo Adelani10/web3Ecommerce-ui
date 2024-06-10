@@ -77,6 +77,9 @@ const Main: NextPage = () => {
     setToys(toys);
   }
 
+  console.log(itemsFromCall)
+  console.log(clothing)
+
   useEffect(() => {
     if (isWeb3Enabled) {
       getContract();
