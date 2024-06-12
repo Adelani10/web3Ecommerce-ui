@@ -77,9 +77,6 @@ const Main: NextPage = () => {
     setToys(toys);
   }
 
-  console.log(itemsFromCall)
-  console.log(clothing)
-
   useEffect(() => {
     if (isWeb3Enabled) {
       getContract();
@@ -111,7 +108,7 @@ const Main: NextPage = () => {
             />
           )}
           <h2 className="text-3xl font-semibold pt-4">U-Bay Best Sellers</h2>
-          <div className="">
+          <div id="clothing" className="">
             <h2 className="capitalize font-semibold text-2xl w-full border-b-2 pb-1 border-black">
               clothing & jewelry
             </h2>
@@ -135,7 +132,7 @@ const Main: NextPage = () => {
             </div>
           </div>
 
-          <div className="">
+          <div id="electronics" className="">
             <h2 className="capitalize font-semibold text-2xl w-full border-b-2 pb-1 border-black">
               electronics and gadgets
             </h2>
@@ -159,7 +156,7 @@ const Main: NextPage = () => {
             </div>
           </div>
 
-          <div className="">
+          <div id="toys" className="">
             <h2 className="capitalize font-semibold text-2xl w-full border-b-2 pb-1 border-black">
               toys and gaming
             </h2>
